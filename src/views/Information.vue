@@ -1,5 +1,5 @@
 <template>
-  <div class="information">
+  <div class="information" v-if="notFound == 'notFound'">
     <h1 class="information__tittle">
       Informarion About {{ this.$route.params.id }}
     </h1>
@@ -39,6 +39,7 @@ export default {
       specialAttack: null,
       specialDefence: null,
       speed: null,
+      notFound: this.$store.state.pokemons.notFound,
     };
   },
 

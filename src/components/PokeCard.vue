@@ -36,6 +36,7 @@ export default {
   name: "PokeCard",
   props: {
     data: Object,
+    numberPage: null,
   },
 
   data() {
@@ -47,8 +48,15 @@ export default {
   async created() {
     await this.$store.dispatch("pokemons/getCharacter", this.data.url);
     this.information = this.$store.state.pokemons.character;
-    //console.log(this.information.types[0].type.name);
   },
+
+   watch:{
+      async numberPage(){
+        await this.$store.dispatch("pokemons/getCharacter", this.data.url);
+        this.information = this.$store.state.pokemons.character;
+      }
+  },
+
 
   methods: {
     colorType(type) {
@@ -63,11 +71,15 @@ export default {
           return "#f7786b";
         case "normal":
           return "#b1736c";
-          case "poison":
+        case "poison":
           return "#B058A0";
+        case "electric":
+          return "#F8D030";
       }
     },
   },
+
+
 };
 </script>
 
@@ -97,7 +109,6 @@ export default {
 .poke-card__container-image img {
   width: 100%;
   height: 100%;
-  //background-color: #ffffff;
   object-fit: cover;
   transform: scale(1);
   -webkit-transition: opacity 0.5s;
@@ -126,9 +137,6 @@ export default {
   position: absolute;
   height: 2rem;
   width: 6rem;
-  //left: 20px;
-  //right: 20px;
-  //bottom: 56px;
   margin: 0;
   padding: 0;
   color: #666c74;
@@ -136,10 +144,7 @@ export default {
   opacity: 0;
   -webkit-transform: translateY(45px);
   transform: translateY(45px);
-  -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
-  transition: opacity 0.3s, -webkit-transform 0.3s;
   transition: opacity 0.3s, transform 0.3s;
-  transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
   -webkit-transition-delay: 0s;
   transition-delay: 0s;
 }
@@ -163,7 +168,6 @@ export default {
 }
 
 .poke-card__name {
-  //margin: 0rem;
   margin: 0;
   padding: 0 0 10px 0;
   color: #000;
@@ -175,5 +179,9 @@ export default {
 .router {
   color: white;
   text-decoration: none;
+}
+
+.poke-card__type{
+    border-radius: 8px;
 }
 </style>

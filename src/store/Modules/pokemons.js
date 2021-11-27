@@ -7,6 +7,7 @@ export default{
     state: {
         character: null,
         characters: null,
+        notFound: "notFound",
     },
     mutations: {
         setCharacters(state, characters){
@@ -14,6 +15,9 @@ export default{
         },
         setCharacter(state, character){
             state.character = character;
+        },
+        setNotFound(state, notFound){
+            state.notFound = notFound;
         },
     },
     actions: {
@@ -44,8 +48,9 @@ export default{
                 url + 'pokemon/' + name
             );
             if(response.status == 200){
-              commit("setCharacter", response.data);
-            } else {
+              commit("setCharacter", response.data);  
+            } else if(response.status == 404){
+                commit("setNotFound", response.data);
                 console.log("algo salio mal");
             }
           },

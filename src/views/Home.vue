@@ -5,7 +5,7 @@
     </div>
     <div class="home__conteiner-cards" v-if="pokemonPage != null">
       <div class="home__cards" v-for="(characters, index) in pokemonPage" :key="index">
-        <pokeCard class="poke-card" :data="characters" :index="index">
+        <pokeCard class="poke-card" :data="characters" :index="index" :numberPage="numberPage">
         </pokeCard>
       </div>
     </div>
@@ -27,7 +27,7 @@ export default {
     return {
       data: null,
       pokemonPage: [],
-      numberPage: 1,
+      numberPage: 0,
       aux: [],
       numAux: 0,
     };
@@ -36,14 +36,13 @@ export default {
   async created() {
     await this.$store.dispatch("pokemons/getCharacters");
     this.data = this.$store.state.pokemons.characters.results;
-    //this.pokePage(1);
+    this.pokePage(1);
   },
 
   methods:{
     pagination(val){
       this.numberPage = val.page;
       this.pokePage(this.numberPage);
-      console.log(this.pokemonPage);
     },
 
     async pokePage(num){
