@@ -1,7 +1,7 @@
 <template>
   <div class="information" v-if="notFound == 'notFound'">
     <h1 class="information__tittle">
-      Informarion About {{ this.$route.params.id }}
+      Information About {{ this.$route.params.id }}
     </h1>
     <div class="information__card">
       <div class="information__container-image" v-if="information != null">
