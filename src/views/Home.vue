@@ -96,7 +96,6 @@ export default {
     grid-auto-rows: auto auto;
     grid-column: 2;
     grid-row: 2;
-    //margin: 1rem;
     padding: 1rem;
     justify-items: center;
   }
@@ -106,10 +105,4 @@ export default {
     top: 4.5rem;
   }
 }
-
-/* @media (max-width: 736px) {
-  .home__conteiner-cards{
-    display: none;
-  }
-} */
 </style>

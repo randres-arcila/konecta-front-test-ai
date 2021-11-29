@@ -8,7 +8,7 @@
         <h2 class="poke-card__id"># {{ information.id }}</h2>
       </div>
 
-      <div class="poke-card__container-image" :style="prueba(0)">
+      <div class="poke-card__container-image" :style="styleTypes(0)">
         <img
           class="poke-card__image"
           :src="information.sprites.front_default"
@@ -24,7 +24,7 @@
           v-for="(type, index) in information.types"
           :key="index"
         >
-          <button class="poke-card__type" :style="prueba(index)">
+          <button class="poke-card__type" :style="styleTypes(index)">
             {{ information.types[index].type.name }}
           </button>
         </div>
@@ -72,7 +72,7 @@ export default {
       
     },
 
-    prueba(val) {
+    styleTypes(val) {
       switch (this.typesList[val]) {
         case "grass":
           return { "--color": "#78C850", "--text-color": "#000" };
@@ -197,7 +197,7 @@ export default {
 .poke-card__name {
   margin: 0;
   padding: 0 0 10px 0;
-  color: #000;
+  color: #1a293b;
   font-size: 22px;
   font-weight: bold;
   text-transform: capitalize;
