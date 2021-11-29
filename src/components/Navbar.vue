@@ -1,12 +1,11 @@
 <template>
-  <div class="navbar">
+  <div class="navbar"  @click="goToPath('Home')">
       <img
-        @click="goToPath('Home')"
         src="@/assets/Images/poke.png"
         alt="logo"
         class="navbar__logo"
       />
-      <h2 @click="goToPath('Home')">PokeDEx</h2>
+      <h2 class="navbar__tittle">PokeDex</h2>
   </div>
 </template>
 
@@ -27,18 +26,18 @@ export default {
   position: fixed;
   width: 100%;
   height: 4rem;
-  display: grid;
-  grid-template-columns: 6% 10% auto;
-  grid-template-rows: 4rem;
+  display: flex;
   background-color: #ebf5fd;
   font-family: "Montserrat", "Helvetica", sans-serif;
   z-index: 1;
   &__logo {
-    grid-column: 1;
     height: 3rem;
     width: auto;
     align-self: center;
-    padding: 0.9rem 2rem 0.9rem 2rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    cursor: pointer;
+  }
+  &__tittle{
     cursor: pointer;
   }
 }

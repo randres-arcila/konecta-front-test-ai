@@ -1,13 +1,13 @@
 <template>
   <div class="pagination">
     <div class="pagination__container-buttons">
-      <button class="pagination__buttons">«</button>
+      <button class="pagination__buttons"  @click="paginationLeft">«</button>
       <button id="1" class="pagination__buttons" @click="pagination1">1</button>
       <button id="2" class="pagination__buttons" @click="pagination2">2</button>
       <button id="3" class="pagination__buttons" @click="pagination3">3</button>
       <button id="4" class="pagination__buttons" @click="pagination4">4</button>
       <button id="5" class="pagination__buttons" @click="pagination5">5</button>
-      <button class="pagination__buttons">»</button>
+      <button class="pagination__buttons"  @click="paginationRight">»</button>
     </div>
   </div>
 </template>
@@ -24,27 +24,37 @@ export default {
   methods: {
     pagination1() {
       this.$emit("paginationCall", {
-        page: '1',
+        page: 1,
       });
     },
     pagination2() {
       this.$emit("paginationCall", {
-        page: '2',
+        page: 2,
       });
     },
     pagination3() {
       this.$emit("paginationCall", {
-        page: '3',
+        page: 3,
       });
     },
     pagination4() {
       this.$emit("paginationCall", {
-        page: '4',
+        page: 4,
       });
     },
     pagination5() {
       this.$emit("paginationCall", {
-        page: '5',
+        page: 5,
+      });
+    },
+    paginationRight() {
+      this.$emit("paginationCall", {
+        page: '>',
+      });
+    },
+    paginationLeft() {
+      this.$emit("paginationCall", {
+        page: '<',
       });
     },
   },
@@ -55,6 +65,7 @@ export default {
 .pagination {
   display: grid;
   align-content: center;
+  
   &__buttons {
     height: 2.5rem;
     width: 2.5rem;

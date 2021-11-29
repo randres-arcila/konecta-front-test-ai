@@ -1,11 +1,20 @@
 <template>
   <div class="home">
     <div class="home__pager">
-      <pagination @paginationCall='pagination'/>
+      <pagination class="home__pagination" @paginationCall="pagination" />
     </div>
     <div class="home__conteiner-cards" v-if="pokemonPage != null">
-      <div class="home__cards" v-for="(characters, index) in pokemonPage" :key="index">
-        <pokeCard class="poke-card" :data="characters" :index="index" :numberPage="numberPage">
+      <div
+        class="home__cards"
+        v-for="(characters, index) in pokemonPage"
+        :key="index"
+      >
+        <pokeCard
+          class="poke-card"
+          :data="characters"
+          :index="index"
+          :numberPage="numberPage"
+        >
         </pokeCard>
       </div>
     </div>
@@ -27,7 +36,7 @@ export default {
     return {
       data: null,
       pokemonPage: [],
-      numberPage: 0,
+      numberPage: 1,
       aux: [],
       numAux: 0,
     };
@@ -39,26 +48,47 @@ export default {
     this.pokePage(1);
   },
 
-  methods:{
-    pagination(val){
-      this.numberPage = val.page;
-      this.pokePage(this.numberPage);
+  methods: {
+    pagination(val) {
+      if (val.page == ">") {
+        if (this.numberPage == 5) {
+          this.numberPage = 1;
+          this.pokePage(this.numberPage);
+        } else {
+          this.numberPage = this.numberPage + 1;
+          this.pokePage(this.numberPage);
+        }
+      } else if (val.page == "<") {
+        if (this.numberPage == 1) {
+          this.numberPage = 5;
+          this.pokePage(this.numberPage);
+        } else {
+          this.numberPage = this.numberPage - 1;
+          this.pokePage(this.numberPage);
+        }
+      } else {
+        this.numberPage = val.page;
+        this.pokePage(this.numberPage);
+      }
     },
 
-    async pokePage(num){
+    async pokePage(num) {
       this.pokemonPage.splice(0, this.pokemonPage.length);
       this.numAux = 0;
-      for(let i = ((num-1)*10); i < num*10; i++){
+      for (let i = (num - 1) * 10; i < num * 10; i++) {
         this.pokemonPage[this.numAux] = this.data[i];
         this.numAux = this.numAux + 1;
       }
     },
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .home {
+  background: url("~@/assets/Images/rotom.jpg") no-repeat center center fixed;
+  background-size: cover;
+  
   &__conteiner-cards {
     display: grid;
     grid-gap: 1rem;
@@ -66,10 +96,20 @@ export default {
     grid-auto-rows: auto auto;
     grid-column: 2;
     grid-row: 2;
-    margin: 1rem;
+    //margin: 1rem;
+    padding: 1rem;
+    justify-items: center;
   }
-  &__pager{
-    margin: 1rem;
+  &__pager {
+    z-index: 1;
+    position: sticky;
+    top: 4.5rem;
   }
 }
+
+/* @media (max-width: 736px) {
+  .home__conteiner-cards{
+    display: none;
+  }
+} */
 </style>

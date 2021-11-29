@@ -20,11 +20,13 @@ export default {
 
 <style lang="scss">
 body {
-  height: 100%;
-  width: 100%;
+  //height: 100vh;
+  //width: 100vw;
   margin: 0rem;
 }
 .app {
+  width: 100%;
+  min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 4rem auto;

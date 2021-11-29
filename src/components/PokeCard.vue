@@ -8,7 +8,7 @@
         <h2 class="poke-card__id"># {{ information.id }}</h2>
       </div>
 
-      <div class="poke-card__container-image">
+      <div class="poke-card__container-image" :style="prueba(0)">
         <img
           class="poke-card__image"
           :src="information.sprites.front_default"
@@ -19,14 +19,15 @@
         <h2 class="poke-card__name">
           {{ data.name }}
         </h2>
-        <button
-          class="poke-card__type"
-          :style="{
-            backgroundColor: colorType(information.types[0].type.name),
-          }"
+        <div
+          class="poke-card__container-buttons"
+          v-for="(type, index) in information.types"
+          :key="index"
         >
-          {{ information.types[0].type.name }}
-        </button>
+          <button class="poke-card__type" :style="prueba(index)">
+            {{ information.types[index].type.name }}
+          </button>
+        </div>
       </div>
     </router-link>
   </div>
@@ -42,44 +43,62 @@ export default {
   data() {
     return {
       information: null,
+      notification_type: null,
+      typePokemon: null,
+      typesList: [],
     };
   },
 
   async created() {
     await this.$store.dispatch("pokemons/getCharacter", this.data.url);
-    this.information = this.$store.state.pokemons.character;
+    this.information = await this.$store.state.pokemons.character;
+    this.types();
   },
 
-   watch:{
-      async numberPage(){
-        await this.$store.dispatch("pokemons/getCharacter", this.data.url);
-        this.information = this.$store.state.pokemons.character;
-      }
-  },
-
-
-  methods: {
-    colorType(type) {
-      switch (type) {
-        case "grass":
-          return "#48d0b1";
-        case "fire":
-          return "#fb6c6c";
-        case "water":
-          return "#76bdfe";
-        case "bug":
-          return "#f7786b";
-        case "normal":
-          return "#b1736c";
-        case "poison":
-          return "#B058A0";
-        case "electric":
-          return "#F8D030";
-      }
+  watch: {
+    async numberPage() {
+      await this.$store.dispatch("pokemons/getCharacter", this.data.url);
+      this.information = await this.$store.state.pokemons.character;
+      this.typesList.splice(0, this.typesList.length);
+      this.types();
     },
   },
 
+  methods: {
+    types() {
+      for (let i = 0; i < this.information.types.length; i++) {
+        this.typesList.push(this.information.types[i].type.name);
+      }
+      
+    },
 
+    prueba(val) {
+      switch (this.typesList[val]) {
+        case "grass":
+          return { "--color": "#78C850", "--text-color": "#000" };
+        case "fire":
+          return { "--color": "#F05030", "--text-color": "#fff" };
+        case "water":
+          return { "--color": "#3899F8", "--text-color": "#000" };
+        case "bug":
+          return { "--color": "#A8B820", "--text-color": "#000" };
+        case "normal":
+          return { "--color": "#A8A090", "--text-color": "#000" };
+        case "poison":
+          return { "--color": "#B058A0", "--text-color": "#fff" };
+        case "electric":
+          return { "--color": "#F8D030", "--text-color": "#000" };
+        case "ground":
+          return { "--color": "#E9D6A4", "--text-color": "#000" };
+        case "fairy":
+          return { "--color": "#E79FE7", "--text-color": "#fff" };
+        case "flying":
+          return { "--color": "#98A8F0", "--text-color": "#000" };
+        default:
+          return { "--color": "#000", "--text-color": "#fff" };
+      }
+    },
+  },
 };
 </script>
 
@@ -91,20 +110,27 @@ export default {
   padding: 0.8rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  overflow: hidden;
   transition: box-shadow 0.5s;
-  background-color: rgb(250, 248, 248);
+  background-color: rgb(236, 235, 235);
+  margin: 1rem;
+  overflow: hidden;
+
+  &__container-buttons {
+    display: inline-block;
+    margin-right: 1rem;
+  }
 }
 .poke-card:hover {
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 50px rgba(21, 200, 255, 1);
 }
 
 /*-------------------- image --------------------*/
 .poke-card__container-image {
   height: 80%;
-  overflow: hidden;
   border-radius: 8px;
   transition: height 0.5s, background-color 1.5s;
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
 }
 .poke-card__container-image img {
   width: 100%;
@@ -116,7 +142,7 @@ export default {
 }
 .poke-card:hover .poke-card__container-image {
   height: 16rem;
-  background-color: #00ffff;
+  background-color: var(--color);
 }
 
 .poke-card:hover .poke-card__container-image img {
@@ -134,19 +160,20 @@ export default {
   height: 5rem;
 }
 .poke-card__type {
-  position: absolute;
   height: 2rem;
   width: 6rem;
   margin: 0;
   padding: 0;
-  color: #666c74;
-  line-height: 27px;
+  background-color: var(--color);
+  color: var(--text-color);
   opacity: 0;
   -webkit-transform: translateY(45px);
   transform: translateY(45px);
   transition: opacity 0.3s, transform 0.3s;
   -webkit-transition-delay: 0s;
   transition-delay: 0s;
+  border-radius: 8px;
+  border-color: transparent;
 }
 .poke-card:hover .poke-card__type {
   opacity: 1;
@@ -181,7 +208,8 @@ export default {
   text-decoration: none;
 }
 
-.poke-card__type{
-    border-radius: 8px;
+.prueba:hover {
+  height: 16rem;
+  background-color: #000;
 }
 </style>

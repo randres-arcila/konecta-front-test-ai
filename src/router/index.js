@@ -15,7 +15,13 @@ const routes = [
     name: "Information",
     component: () => import(`@/views/Information.vue`),
   },
+  {
+    path: "/404",
+    name: "NotFound",
+    component: () => import(`@/views/NotFound.vue`),
+  },
 ]
+
 
 const router = new VueRouter({
   mode: 'history',
@@ -23,5 +29,12 @@ const router = new VueRouter({
   routes
 })
 
+/* router.beforeEach((to, from, next) => {
+
+  if(estaMelo() != 'estaMelo'){
+    return next({name: 'Home'})
+  }
+  return next()
+}) */
 
 export default router
