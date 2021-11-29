@@ -20,8 +20,6 @@ export default {
 
 <style lang="scss">
 body {
-  //height: 100vh;
-  //width: 100vw;
   margin: 0rem;
 }
 .app {
